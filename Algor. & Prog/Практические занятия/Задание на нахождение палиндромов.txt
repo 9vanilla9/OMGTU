@@ -1,0 +1,29 @@
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        string s = Console.ReadLine().ToLower();
+        int sum = 0;
+        for (int i = 0; i<s.Length; i++)
+        {
+            for (int g =i+1; g<=s.Length; g++  )
+            {
+                string strsub = s.Substring(i,g-i);
+                if (Pal(strsub)&&strsub.Length>sum)
+                {
+                    sum = strsub.Length;
+                }
+            }
+        }
+        Console.WriteLine(sum);
+    }
+    static bool Pal(string w)
+    {
+        for (int i = 0; i < w.Length / 2; i++)
+        {
+            if (w[i] != w[w.Length - 1 - i])
+                return false;
+        }
+        return true;
+    }
+}
