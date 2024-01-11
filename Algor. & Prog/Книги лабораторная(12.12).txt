@@ -1,0 +1,101 @@
+using System;
+using System.Security.Cryptography.X509Certificates;
+
+class Kniga
+{
+    public string fio;
+    public string name;
+    public int year;
+    public int[] month;
+    public Kniga(string fio, string name, int year, int[] month)
+    {
+        this.fio = fio;
+        this.name = name;
+        this.year = year;
+        this.month = month;
+    }
+    public void Print()
+    {
+        Console.WriteLine();
+        Console.WriteLine($"ФИО автора: {fio}\t\nНазвание книги: {name}\t\nГод издания: {year}\t\nМесяца выдачи: ");
+        for(int i=0; i<month.Length; i++)
+        {
+            Console.Write(month[i]+", ");
+        }
+        Console.WriteLine();
+    }
+}
+class Programm
+{
+    public static void Main()
+    {
+        Console.WriteLine("Введите количество книг: ");
+        int n = int.Parse(Console.ReadLine());
+        Kniga[] arr = new Kniga[n];
+        for (int i = 0; i < n; i++)
+        {
+            Console.WriteLine($"Введите данные {i + 1} книги: ");
+            Console.Write("ФИО автора: ");
+            string fio = Console.ReadLine();
+            Console.Write("Название книги: ");
+            string name = (Console.ReadLine());
+            Console.Write("Год издания: ");
+            int year = int.Parse(Console.ReadLine());
+            Console.Write("Количество месяцев: ");
+            int a = int.Parse(Console.ReadLine());
+            Console.Write("Месяца выдачи: ");
+            int[] month = new int[a];
+            for (int j = 0; j < a; j++)
+            {
+                month[j] = int.Parse(Console.ReadLine());
+            }
+            arr[i] = new Kniga(fio, name, year, month);
+        }
+        Console.Write("Введите год для сравнения: ");
+        int y = int.Parse(Console.ReadLine());
+        string[] ys = new string[n];
+        Console.Write($"Книги, дата издания которых позже {y} года: ");
+        int count = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (arr[i].year>y)
+            {
+                count++;
+                Console.WriteLine(arr[i].name);
+            }
+        }
+        if (count==0)
+            Console.WriteLine("Таких книг нет");
+        Console.WriteLine();
+        Console.Write("Введите ФИО автора: ");
+        string y2 = Console.ReadLine();
+        Console.WriteLine($"Книги автора {y2}: ");
+        int count2 = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (arr[i].fio.Contains(y2))
+            {
+                count2++;
+                Console.Write(arr[i].name + "\t" );
+            }
+        }
+        if (count2==0)
+        {
+            Console.WriteLine("В данной библиотеке отсуствуют книги заданного автора");
+        }
+        Console.Write("Введите название книги: ");
+        string y3 = Console.ReadLine();
+        bool flag = false;
+        for (int i = 0; i < n; i++)
+        {
+            if (arr[i].name == y3)
+            {
+                arr[i].Print();
+                flag = true;
+            }
+        }
+        if(flag == false )
+        { Console.WriteLine("В библиотеке отсуствует заданная книга "); }
+    }
+}
+
