@@ -1,0 +1,114 @@
+int position;
+int counter;
+int pos_r;
+Random random = new Random();
+
+Console.WriteLine("Введите количество серых мышек");
+int SMN = Convert.ToInt32(Console.ReadLine());
+
+Console.WriteLine("Введите количество белых мышек");
+int BMN = Convert.ToInt32(Console.ReadLine());
+
+Console.WriteLine("Введите шаг");
+int k = Convert.ToInt32(Console.ReadLine());
+
+Console.WriteLine("Введите количество серых мышек, которые должны остаться");
+int SMO = Convert.ToInt32(Console.ReadLine());
+
+Console.WriteLine("Введите количество белых мышек, которые должны остаться");
+int BMO = Convert.ToInt32(Console.ReadLine());
+
+int MN = SMN + BMN;
+
+int[] mish = new int[SMN + BMN];
+
+for (int i = 0; i < mish.Length; i++)
+{
+    mish[i] = 0;
+}
+if (k <= SMN + BMN)
+{
+    position = 1;
+    counter = mish.Length;
+
+    while (MN > SMO + BMO)
+    {
+        if (position > mish.Length) position = 1;
+        if (position % k == 0)
+        {
+            mish[position - 1] = 1;
+            MN--;
+            position++;
+        }
+        else
+        {
+            if (mish[position - 1] == 0)
+            {
+                position++;
+            }
+        }
+    }
+
+    if (counter < SMO + BMO)
+    {
+        Console.WriteLine("Невозможно расставить");
+    }
+    else
+    {
+        counter = 0;
+        while (counter < SMO)
+        {
+            pos_r = random.Next(0, mish.Length);
+            if (mish[pos_r] == 0)
+            {
+                mish[pos_r] = 3;
+                counter++;
+            }
+        }
+
+        counter = 0;
+        while (counter < SMN - SMO)
+        {
+            pos_r = random.Next(0, mish.Length);
+            if (mish[pos_r] == 1)
+            {
+                mish[pos_r] = 3;
+                counter++;
+            }
+        }
+
+        counter = 0;
+        while (counter < BMO)
+        {
+            pos_r = random.Next(0, mish.Length);
+            if (mish[pos_r] == 0)
+            {
+                mish[pos_r] = 2;
+                counter++;
+            }
+        }
+
+        counter = 0;
+        while (counter < BMN - BMO)
+        {
+            pos_r = random.Next(0, mish.Length);
+            if (mish[pos_r] == 1)
+            {
+                mish[pos_r] = 2;
+                counter++;
+            }
+        }
+
+        for (int i = 0; i < mish.Length; i++)
+        {
+            if (mish[i] == 3)
+            {
+                Console.Write("С");
+            }
+            if (mish[i] == 2)
+            {
+                Console.Write("Б");
+            }
+        }
+    }
+}
