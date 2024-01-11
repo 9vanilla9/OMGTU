@@ -1,0 +1,63 @@
+double Len_puti;
+double km_h;
+double time; 
+double max_dist;
+double ost_dist = 0;
+int time_sunrise;
+int time_sunset;
+int k_ost;
+int days = 0;
+
+Console.WriteLine("Введите длину пути");
+Len_puti = Convert.ToDouble(Console.ReadLine());
+
+Console.WriteLine("Введите скорость туристов в километрах в час");
+km_h = Convert.ToDouble(Console.ReadLine());
+
+Console.WriteLine("Введите количество остановок");
+k_ost = Convert.ToInt32(Console.ReadLine());
+
+double[] dictances = new double[k_ost + 2];
+dictances[0] = 0;
+dictances[k_ost + 1] = Len_puti;
+
+List<int> stops = new List<int>();
+
+Console.WriteLine("Введите время восхода(час пробел минута)");
+String[] input_sunrise = Console.ReadLine().Split(" ");
+time_sunrise = Convert.ToInt32(input_sunrise[0])*60 + Convert.ToInt32(input_sunrise[1]);
+
+Console.WriteLine("Введите время захода(час пробел минута)");
+String[] input_sunset = Console.ReadLine().Split(" ");
+time_sunset = Convert.ToInt32(input_sunset[0])*60 + Convert.ToInt32(input_sunset[1]);
+
+time = (time_sunset - time_sunrise) / 60;
+
+max_dist = km_h * time;
+
+Console.WriteLine("Введите расстояние от начала пути до каждого остановочного пункта");
+
+ost_dist += max_dist;
+
+for (int i = 1; i < k_ost + 1; i++)
+{
+    dictances[i] = Convert.ToDouble(Console.ReadLine());
+}
+
+for(int i = 1; i < k_ost + 2; i++)
+{
+    if (dictances[i] > ost_dist)
+    {
+        days++;
+        ost_dist = dictances[i - 1];
+        ost_dist += max_dist;
+        stops.Add(i - 1);
+    }
+}
+
+Console.WriteLine("Затраченные дни " + days);
+
+for(int i = 0; i < stops.Count; i++)
+{
+    Console.WriteLine("Остановка " + stops[i]);
+}

@@ -1,0 +1,20 @@
+using System.Security.Authentication.ExtendedProtection;
+Console.WriteLine("Образец:");
+string a = Console.ReadLine();
+int s = a.Length;
+Console.WriteLine("Количество строк:");
+int n = int.Parse(Console.ReadLine());
+int c = 0;
+for (int i = 0; i < n; i++)
+{
+    string b = Console.ReadLine();
+    b = b.Replace(a, " ");
+    foreach(char k in b)
+    {
+      if (k == ' ')
+      {
+         c++;
+      }
+    }
+}
+Console.WriteLine(c);
