@@ -1,0 +1,148 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication16
+{
+    class Program
+    {
+        static void Main()
+        {
+            List<string> deys = new List<string>();//начальные строки которые вводим 
+            while (true)
+            {
+                Console.Write("Введите действия и ингридиенты или же '-', если хотите закончить: ");
+                string n = Console.ReadLine();
+                if (n == "-")
+                {
+                    break;
+                }
+                else
+                {
+                    deys.Add(n);
+                }
+            }
+            string [] res = new string[deys.Count];
+            string [] result = new string[deys.Count];//строки которые получаются после всего этого
+            for (int y = 0; y < deys.Count; y++)//фор чтобы взять первую строку 
+            {
+                string posstr = deys[y];
+                string[] words = deys[y].Split(' ');// разбиение на элементы каждой строки 
+                if (words[0] == "MIX")
+                {
+                    result[y] = deys[y];
+                    for (int g = 1;g<words.Length;g++) // фор чтобы перебирать элементы строки для поиска цифр 
+                   {
+                        string cif;
+                        char [] sim2 = words[g].ToCharArray(); // разбиваю каждый элемент строки 
+                            for (int aw = 0; aw<sim2.Length;aw++)
+                            {
+                                if (sim2[0]=='1' || sim2[0]=='2' || sim2[0]=='3' || sim2[0]=='4' || sim2[0]=='5' || sim2[0]=='6' || sim2[0]=='7' || sim2[0]=='8' || sim2[0]=='9' || sim2[0]=='0' )//|| sc == sim2.Length)
+                                {
+                                    cif = words[g];
+                                    int w = Convert.ToInt32(cif);
+                                    result[y] = result[y].Replace(cif, res[w-1]);
+                                    break;
+                                }
+                                else
+                                {
+                                    break; 
+                                }
+                            }
+                    }
+                    string pr = result[y].Replace(" ","");
+                    pr= pr.Replace("MIX","");
+                    string T = "MX"+pr+"XM";
+                    res[y]=T;
+                }
+                else if (words[0] == "WATER")
+                                {
+                    result[y] = deys[y];
+                    for (int g = 1;g<words.Length;g++) // фор чтобы перебирать элементы строки для поиска цифр 
+                   {
+                        string cif;
+                        char [] sim2 = words[g].ToCharArray(); // разбиваю каждый элемент строки 
+                            for (int aw = 0; aw<sim2.Length;aw++)
+                            {
+                                if (sim2[0]=='1' || sim2[0]=='2' || sim2[0]=='3' || sim2[0]=='4' || sim2[0]=='5' || sim2[0]=='6' || sim2[0]=='7' || sim2[0]=='8' || sim2[0]=='9' || sim2[0]=='0' )//|| sc == sim2.Length)
+                                {
+                                    cif = words[g];
+                                    int w = Convert.ToInt32(cif);
+                                    result[y] = result[y].Replace(cif, res[w-1]);
+                                    break;
+                                }
+                                else
+                                {
+                                    break; 
+                                }
+                            } 
+                    }
+                    //Console.WriteLine(result[y]);
+                    string pr = result[y].Replace(" ","");
+                    pr= pr.Replace("WATER","");
+                    string T = "WT"+pr+"TW";
+                    res[y]=T;
+                }
+                else if (words[0] == "DUST")
+                {
+                    result[y] = deys[y];
+                    for (int g = 1;g<words.Length;g++)
+                   {
+                        string cif;
+                        char [] sim2 = words[g].ToCharArray();
+                            for (int aw = 0; aw<sim2.Length;aw++)
+                            {
+                                if (sim2[0]=='1' || sim2[0]=='2' || sim2[0]=='3' || sim2[0]=='4' || sim2[0]=='5' || sim2[0]=='6' || sim2[0]=='7' || sim2[0]=='8' || sim2[0]=='9' || sim2[0]=='0' )//|| sc == sim2.Length)
+                                {
+                                    cif = words[g];
+                                    int w = Convert.ToInt32(cif);
+                                    result[y] = result[y].Replace(cif, res[w-1]);
+                                    break;
+                                }
+                                else
+                                {
+                                    break; 
+                                }
+                            }
+                    }
+                    string pr = result[y].Replace(" ","");
+                    pr= pr.Replace("DUST","");
+                    string T = "DT"+pr+"TD";
+                    res[y]=T;
+                }
+                else if (words[0] == "FIRE")
+                {
+                    result[y] = deys[y];
+                    for (int g = 1;g<words.Length;g++)
+                   {
+                        string cif;
+                        char [] sim2 = words[g].ToCharArray();
+                            for (int aw = 0; aw<sim2.Length;aw++)
+                            {
+                                if (sim2[0]=='1' || sim2[0]=='2' || sim2[0]=='3' || sim2[0]=='4' || sim2[0]=='5' || sim2[0]=='6' || sim2[0]=='7' || sim2[0]=='8' || sim2[0]=='9' || sim2[0]=='0' )//|| sc == sim2.Length)
+                                {
+                                    cif = words[g];
+                                    int w = Convert.ToInt32(cif);
+                                    result[y] = result[y].Replace(cif, res[w-1]);
+                                    break;
+                                }
+                                else
+                                {
+                                    break; 
+                                }
+                            }
+                    }
+                    string pr = result[y].Replace(" ","");
+                    pr= pr.Replace("FIRE","");
+                    string T = "FR"+pr+"RF";
+                    res[y]=T;
+                }
+            }
+            Console.WriteLine(res.Last());
+        }
+    }
+}
