@@ -1,0 +1,67 @@
+class FordFulkerson
+{
+    static bool Bfs(int[,] rGraph, int Istok, int Stok, int[] verS, int V)
+    {
+        bool[] verp = new bool[V];
+        for (int i = 0; i < V; ++i) verp[i] = false;
+        Queue<int> queue = new Queue<int>();
+        queue.Enqueue(Istok);
+        verp[Istok] = true;
+        verS[Istok] = -1;
+        while (queue.Count != 0)
+        {
+            int u = queue.Dequeue();
+            for (int i = 0; i < V; i++)
+            {
+                if (verp[i] == false && rGraph[u, i] > 0)
+                {
+                    if (i == Stok)
+                    {
+                        verS[i] = u;
+                        return true;
+                    }
+                    queue.Enqueue(i);
+                    verS[i] = u;
+                    verp[i] = true;
+                }
+            }
+        }
+        return false;
+    }
+    int FordFulkersonAlgorithm(int[,] Graph, int Istok, int Stok, int V)
+    {
+        int u, v;
+        int[,] rGraph = new int[V, V];
+        for (u = 0; u < V; u++) for (v = 0; v < V; v++) rGraph[u, v] = Graph[u, v];
+        int[] verS = new int[V];
+        int maxFlow = 0;
+        while (Bfs(rGraph, Istok, Stok, verS, V))
+        {
+            int LocalFlow = int.MaxValue;
+            for (v = Stok; v != Istok; v = verS[v])
+            {
+                u = verS[v];
+                LocalFlow = Math.Min(LocalFlow, rGraph[u, v]);
+            }
+            for (v = Stok; v != Istok; v = verS[v])
+            {
+                u = verS[v];
+                rGraph[u, v] -= LocalFlow;
+                rGraph[v, u] += LocalFlow;
+            }
+            maxFlow += LocalFlow;
+        }
+        return maxFlow;
+    }
+    public static void Main()
+    {
+        int V = 5;
+        int[,] graph = new int[,] { {0, 15, 20, 30, 0},
+                                    {0, 0, 0, 20, 30},
+                                    {0, 0, 0, 10, 20},
+                                    {0, 0, 0, 0, 15},
+                                    {0, 0, 0, 0, 0} };
+        FordFulkerson fordFulkerson = new FordFulkerson();
+        Console.WriteLine("Максимальный поток: " + fordFulkerson.FordFulkersonAlgorithm(graph, 0, 4, V));
+    }
+}

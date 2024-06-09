@@ -1,0 +1,66 @@
+class AlgorithmOfDijkstra
+{
+    public static void Dijkstra(int[,] graph, int source, int V)
+    {
+        int[] dlina = new int[V];
+        bool[] verp = new bool[V];
+
+        for (int i = 0; i < V; i++)
+        {
+            dlina[i] = int.MaxValue;
+            verp[i] = false;
+        }
+        dlina[source] = 0;
+        for (int count = 0; count < V - 1; count++)
+        {
+            int min = int.MaxValue;
+            int minI = -1;
+            for (int v = 0; v < V; v++)
+            {
+                if (!verp[v] && dlina[v] <= min)
+                {
+                    min = dlina[v];
+                    minI = v;
+                }
+            }
+            int u = minI;
+            verp[u] = true;
+            for (int v = 0; v < V; v++)
+            {
+                if (!verp[v] && graph[u, v] != 0 && dlina[u] != int.MaxValue && dlina[u] + graph[u, v] < dlina[v])
+                {
+                    dlina[v] = dlina[u] + graph[u, v];
+                }
+            }
+        }
+        Console.WriteLine("Кратчайшее расстояние из начальной вершины до каждой другой:");
+        Console.WriteLine("Номер вершины \t Расстояние до вершины");
+        for (int i = 0; i < V; i++)
+        {
+            Console.WriteLine((i + 1) + "\t\t\t" + dlina[i]);
+        }
+    }
+
+    static void Main()
+    {
+        int V = 7;
+        int[,] graph = new int[V, V];
+        graph[0, 1] = 6;
+        graph[0, 2] = 9;
+        graph[0, 3] = 12;
+        graph[0, 4] = 5;
+        graph[1, 4] = 7;
+        graph[1, 5] = 10;
+        graph[2, 1] = 12;
+        graph[2, 3] = 5;
+        graph[2, 4] = 9;
+        graph[2, 5] = 7;
+        graph[2, 6] = 15;
+        graph[3, 5] = 11;
+        graph[3, 6] = 12;
+        graph[4, 5] = 6;
+        graph[4, 6] = 17;
+        graph[5, 6] = 16;
+        Dijkstra(graph, 0, V);
+    }
+}

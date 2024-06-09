@@ -1,0 +1,90 @@
+class KruskalAlgorithm
+{
+    class Rebro
+    {
+        public int VershN { get; set; }
+        public int VershK { get; set; }
+        public double VesR { get; set; }
+    }
+
+    static int NachVersh(int[] nachVersh, int c)
+    {
+        if (nachVersh[c] != c)
+            nachVersh[c] = NachVersh(nachVersh, nachVersh[c]);
+        return nachVersh[c];
+    }
+
+    static void VerInf(int[] nachVersh, int[] rangV, int x, int y)
+    {
+        int xNach = NachVersh(nachVersh, x);
+        int yNach = NachVersh(nachVersh, y);
+        if (rangV[xNach] < rangV[yNach])
+            nachVersh[xNach] = yNach;
+        else if (rangV[xNach] > rangV[yNach])
+            nachVersh[yNach] = xNach;
+        else
+        {
+            nachVersh[yNach] = xNach;
+            rangV[xNach]++;
+        }
+    }
+
+    static void KruskalAlg(List<Rebro> rebra, int V)
+    {
+        rebra = rebra.OrderBy(rebro => rebro.VesR).ToList();
+        List<Rebro> result = new List<Rebro>();
+        int[] nachVersh = new int[V];
+        int[] rangV = new int[V];
+        for (int j = 0; j < V; j++)
+        {
+            nachVersh[j] = j;
+            rangV[j] = 0;
+        }
+        int e = 0;
+        int i = 0;
+        while (e < V - 1)
+        {
+            Rebro nextRebro = rebra[i++];
+            int x = NachVersh(nachVersh, nextRebro.VershN);
+            int y = NachVersh(nachVersh, nextRebro.VershK);
+            if (x != y)
+            {
+                result.Add(nextRebro);
+                VerInf(nachVersh, rangV, x, y);
+                e++;
+            }
+        }
+        double KonDlina = 0;
+        Console.WriteLine("Минимальное Остовное Дерево(МОД): ");
+        Console.WriteLine("Ребро \t Вес");
+        foreach (Rebro rebro in result)
+        {
+            Console.WriteLine($"{rebro.VershN} - {rebro.VershK}: \t {rebro.VesR}");
+            KonDlina += rebro.VesR;
+        }
+        Console.WriteLine("Общая длина МОД: " +  KonDlina);
+    }
+    public static void Main()
+    {
+        List<Rebro> rebra = new List<Rebro>();
+        Console.Write("Введите количество вершин: ");                
+        int v = Convert.ToInt32(Console.ReadLine());
+        string prim = "1 2 4";
+        Console.WriteLine("Учтите, что нумерация вершин начинается с нулевой вершины.");
+        Console.WriteLine($"Введите номера связанных вершин и вес ребра, подобно примеру: {prim}.\nЧтобы закончить ввод данных напишите END.");
+        while (true)
+        {
+            string qwe = Convert.ToString(Console.ReadLine());
+            if (qwe=="END")
+            {
+                break;
+            }
+            string[] VerVes = qwe.Split(" ");
+            int NVER=int.Parse(VerVes[0]);
+            int KVER=int.Parse(VerVes[1]);
+            double vesV=double.Parse(VerVes[2]);
+            rebra.Add(new Rebro { VershN = NVER, VershK = KVER, VesR = vesV });
+        }      
+    KruskalAlg(rebra, v);
+    }
+}
