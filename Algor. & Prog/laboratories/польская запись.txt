@@ -1,0 +1,70 @@
+string Q = "3 4 * 5 + 4 *";
+        Console.WriteLine("Введите строку подобно данному примеру.");
+        Console.WriteLine($"Пример: {Q}");
+        string st = Console.ReadLine();
+        string[] primer = st.Split(" ");
+        Stack<int> zapis = new Stack<int>();
+        int p = 0;
+        foreach (string n in primer)
+        {
+            int b;
+            if (int.TryParse(n, out b))
+            {
+                zapis.Push(b);
+            }
+            
+            else if (n=="+" || n=="-" || n=="*" || n =="/")
+            {
+                if (zapis.Count>=2)
+                {
+                    switch (n)
+                    {
+                        case "+":
+                        zapis.Push(zapis.Pop()+zapis.Pop());
+                        break;
+                        case "-":
+                        int P = zapis.Pop();
+                        zapis.Push(zapis.Pop()-P);
+                        break;
+                        case "*":
+                        zapis.Push(zapis.Pop()*zapis.Pop());
+                        break;
+                        case "/":
+                        int T = zapis.Pop();
+                        if (T != 0)
+                        {
+                            zapis.Push(zapis.Pop() / T);
+                        }
+                        else 
+                        { 
+                        p++;
+                        }            
+                        break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Введено неверное количество элементов.");
+                    break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Введены неизвестные символы.");
+            } 
+        }
+        if (zapis.Count==1)
+        {
+            if (p==0)
+            {
+                Console.WriteLine(zapis.Pop());
+            }
+            else
+            {
+                Console.WriteLine("Вы делите на ноль. Так нельзя!");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Пример введён неправильно.");
+        }
