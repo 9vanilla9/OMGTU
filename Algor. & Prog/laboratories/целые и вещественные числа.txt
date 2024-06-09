@@ -1,0 +1,112 @@
+namespace ConsoleApp44
+{
+    class Program
+    {
+        static void Slozh(int a, int b)
+        {
+            Console.WriteLine("Сложение: " + (a + b));
+        }
+        static void Razn(int a, int b)
+        {
+            Console.WriteLine("Разность: " + (a - b));
+        }
+        static void Proizv(int a, int b)
+        {
+            Console.WriteLine("Произведение: " + (a * b));
+        }
+        static void Del(int a, int b)
+        {
+            if (b == 0)
+            {
+                Console.WriteLine("Делить на ноль нельзя!");
+            }
+            else if (a % b != 0)
+            {
+                Console.WriteLine("Деление с остатком. Целая часть от деления: " + (a / b));
+            }
+            else Console.WriteLine("Деление:  " + (a / b));
+        }
+        static void DSlozh(double a, double b)
+        {
+            Console.WriteLine("Результат сложения: " + (a + b));
+        }
+        static void DRazn(double a, double b)
+        {
+            Console.WriteLine("Результат разности: " + (a - b));
+        }
+        static void DProizv(double a, double b)
+        {
+            Console.WriteLine("Результат произведения: " + (a * b));
+        }
+        static void DDel(double a, double b)
+        {
+            if (b == 0)
+            {
+                Console.WriteLine("Делить на ноль нельзя.");
+            }
+            else Console.WriteLine("Результат деления: " + (a / b));
+        }
+        static void Main()
+        {
+            bool a = true;
+            while (a)
+            {
+                Console.WriteLine("Выберите, с каким типом чисел Вы ходите проводить вычисления: ");
+                Console.WriteLine("1. Целые числа");
+                Console.WriteLine("2. Вещественные числа");
+                Console.WriteLine("0. Выход");
+                string x = Console.ReadLine();
+                Console.Clear();
+                switch (x)
+                {
+                    case "1":
+                        Console.WriteLine("Введите два целых числа: ");
+                        int cif1 = Convert.ToInt32(Console.ReadLine());
+                        int cif2 = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Результаты вычисления: ");
+                        Slozh(cif1, cif2);
+                        Razn(cif1, cif2);
+                        Proizv(cif1, cif2);
+                        Del(cif1, cif2);
+                        while (true)
+                        {
+                            Console.WriteLine("Нажмите любую клавишу, чтобы вернуться в меню.");
+                            string back = Console.ReadLine();
+                            if (back != null) break;
+                        }
+                        Console.Clear();
+                        break;
+                    case "2":
+                        Console.WriteLine("Введите два вещественных числа: ");
+                        double Dcif1 = Convert.ToDouble(Console.ReadLine());
+                        double Dcif2 = Convert.ToDouble(Console.ReadLine());
+                        Console.WriteLine("Результаты вычислений: ");
+                        DSlozh(Dcif1, Dcif2);
+                        DRazn(Dcif1, Dcif2);
+                        DProizv(Dcif1, Dcif2);
+                        DDel(Dcif1, Dcif2);
+                        while (true)
+                        {
+                            Console.WriteLine("Нажмите любую клавишу, чтобы вернуться в меню.");
+                            string back = Console.ReadLine();
+                            if (back != null) break;
+                        }
+                        Console.Clear();
+                        break;
+                    case "0":
+                        a = false;
+                        Console.Clear();
+                        break;
+                    case "":
+                        a = false; 
+                        Console.Clear(); 
+                        break;
+                    default:
+                        Console.WriteLine("\nТакого пункта нет в меню.");
+                        Console.Clear();
+                        break;
+                }
+            }
+        }
+    }
+}
